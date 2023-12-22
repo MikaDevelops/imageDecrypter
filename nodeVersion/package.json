@@ -1,0 +1,30 @@
+{
+  "name": "imagedecrypter",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Reorganizes pixels according to a map-file.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikaDevelops/imageDecrypter.git"
+  },
+  "keywords": [
+    "image",
+    "pixel",
+    "organizer",
+    "decrypter"
+  ],
+  "author": "Mika",
+  "license": "SEE LICENSE IN LICENCE",
+  "bugs": {
+    "url": "https://github.com/MikaDevelops/imageDecrypter/issues"
+  },
+  "homepage": "https://github.com/MikaDevelops/imageDecrypter#readme",
+  "dependencies": {
+    "pngjs": "^7.0.0"
+  }
+}
