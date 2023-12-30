@@ -9,11 +9,11 @@ const picture = PNG.sync.read(pictureFile);
 const mapFile = fs.readFileSync('inputFiles/data.csv',{encoding:"utf-8"});
 
 // Käsitellään kartta.
-const kartta = kasitteleKartta(mapFile, picture);
+const [kartta, purettuTeksti] = kasitteleKartta(mapFile, picture);
 
 // Puretaan teksti käsitellystä kuvasta.
-const teksti = puraTeksti(kartta);
-fs.writeFileSync('output/teksti.txt', teksti);
+// const teksti = puraTeksti(kartta);
+fs.writeFileSync('output/teksti.txt', purettuTeksti);
 
 // Kirjoitetaan buffer tiedostoon.
 const buffer = PNG.sync.write(kartta,{colorType: 6});
@@ -30,9 +30,8 @@ function kasitteleKartta(kartta, picture){
         // tehdään uusi kuva
         let newImage = new PNG({width: picture.width, height: picture.height});
 
-
-        // Rakenne johon arvot tallennetaan
-        const karttaArray = [];
+        // salattu teksti
+        let teksti = '';
 
         // puretaan tiedosto riveihin
         const rivit = kartta.split('\n');
@@ -48,20 +47,14 @@ function kasitteleKartta(kartta, picture){
                 const arvopari = rivi[j].split(',');
 
                 PNG.bitblt(picture, newImage, arvopari[0], arvopari[1], 1, 1, j, i);
-                
+                let arrayIndex;
+                arrayIndex = (j+1)*3 + j + i*newImage.width;
+               
+                teksti += String.fromCharCode(parseInt(newImage.data[arrayIndex]));
+
             }
         }
-        return newImage;
+        return [newImage, teksti];
     }
     else throw new Error("Kartta-tiedosto ei ole merkkijono!");
-}
-
-
-function puraTeksti(pngKuva){
-    let teksti = '';
-    for (let i=3; i < pngKuva.data.length; i+=4){
-        teksti += String.fromCharCode(parseInt(pngKuva.data[i], 10));
-    }
-
-    return teksti;
 }
