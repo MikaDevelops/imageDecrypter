@@ -44,12 +44,10 @@ function kasitteleKartta(kartta, picture){
 
             // puretaan parit arvoiksi merkkijonosta
             for (let j = 0; j < rivi.length; j++) {
+                
                 const arvopari = rivi[j].split(',');
-
                 PNG.bitblt(picture, newImage, arvopari[0], arvopari[1], 1, 1, j, i);
-                let arrayIndex;
-                arrayIndex = (j+1)*3 + j + i*newImage.width;
-               
+                let arrayIndex = (j+1)*3 + j + i*newImage.width;
                 teksti += String.fromCharCode(parseInt(newImage.data[arrayIndex]));
 
             }
